@@ -3,7 +3,7 @@ import { useEffect, useState, createContext } from "react";
 const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [theme, setName] = useState("light");
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     if (localStorage.getItem("theme")) {
@@ -12,7 +12,7 @@ const ThemeProvider = ({ children }) => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={[theme, setName]}>
+    <ThemeContext.Provider value={[theme, setTheme]}>
       {children}
     </ThemeContext.Provider>
   );
