@@ -22,8 +22,8 @@ const ToggleTheme = () => {
           className="h-10 w-10 text-gray-900"
           fill="none"
           stroke="currentColor"
-          width="50"
-          height="50"
+          width="30"
+          height="30"
           viewBox="0 0 24 24"
         >
           <path
@@ -44,8 +44,8 @@ const ToggleTheme = () => {
           className="h-10 w-10 text-indigo-200"
           fill="none"
           stroke="currentColor"
-          width="50"
-          height="50"
+          width="30"
+          height="30"
           viewBox="0 0 24 24"
         >
           <path

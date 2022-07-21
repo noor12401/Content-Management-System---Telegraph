@@ -5,6 +5,7 @@ import {
   AppstoreOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import ToggleTheme from "./ToggleTheme";
 
 const { SubMenu } = Menu;
 
@@ -39,9 +40,7 @@ const TopNav = () => {
         </Menu.ItemGroup>
       </SubMenu>
       <Menu.Item key="alipay">
-        <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-          Navigation Four - Link
-        </a>
+        <ToggleTheme />
       </Menu.Item>
     </Menu>
   );
