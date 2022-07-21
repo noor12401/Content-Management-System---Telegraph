@@ -6,6 +6,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import ToggleTheme from "./ToggleTheme";
+import Link from "next/link";
 
 const { SubMenu } = Menu;
 
@@ -20,26 +21,35 @@ const TopNav = () => {
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Menu.Item key="mail" icon={<MailOutlined />}>
-        Navigation One
+        <Link href="/">
+          <a>CMS</a>
+        </Link>
       </Menu.Item>
-      <Menu.Item key="app" disabled icon={<AppstoreOutlined />}>
-        Navigation Two
+      <Menu.Item key="signup" icon={<AppstoreOutlined />}>
+        <Link href="/signup">
+          <a>Signup</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="signin" icon={<AppstoreOutlined />}>
+        <Link href="/signin">
+          <a>Signin</a>
+        </Link>
       </Menu.Item>
       <SubMenu
         key="SubMenu"
         icon={<SettingOutlined />}
-        title="Navigation Three - Submenu"
+        title="Dashboard"
+        style={{ marginLeft: "auto" }}
       >
-        <Menu.ItemGroup title="Item 1">
-          <Menu.Item key="setting:1">Option 1</Menu.Item>
-          <Menu.Item key="setting:2">Option 2</Menu.Item>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup title="Item 2">
-          <Menu.Item key="setting:3">Option 3</Menu.Item>
-          <Menu.Item key="setting:4">Option 4</Menu.Item>
+        <Menu.ItemGroup title="Management">
+          <Menu.Item key="setting:2">
+            <Link href="/admin">
+              <a>Admin</a>
+            </Link>
+          </Menu.Item>
         </Menu.ItemGroup>
       </SubMenu>
-      <Menu.Item key="alipay">
+      <Menu.Item>
         <ToggleTheme />
       </Menu.Item>
     </Menu>
