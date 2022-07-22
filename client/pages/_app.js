@@ -1,5 +1,6 @@
 import { ThemeProvider } from "../context/theme";
 import TopNav from "../components/TopNav";
+import "../public/css/style.css";
 
 function MyApp({ Component, pageProps }) {
   return (
