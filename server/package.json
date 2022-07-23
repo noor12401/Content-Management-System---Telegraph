@@ -1,11 +1,10 @@
-
 {
   "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r esm index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
-    "nanoid": "^2.1.11"
+    "nanoid": "^2.1.11",
+    "nodemon": "^2.0.19"
   }
 }
