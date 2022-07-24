@@ -1,19 +1,20 @@
+
 require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const authRoutes = require("./routes/auth");
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+
+import authRoutes from "./routes/auth";
 
 const morgan = require("morgan");
 
 const app = express();
-const http = require("http").createServer(app);
 
 // db connection
 mongoose
   .connect(process.env.DATABASE)
-  .then(() => console.log("Connection Successful"))
-  .catch((err) => console.log("Connection Error: ", err));
+  .then(() => console.log("DB connected"))
+  .catch((err) => console.log("DB CONNECTION ERROR: ", err));
 
 // middlewares
 app.use(express.json({ limit: "4mb" }));
@@ -24,6 +25,4 @@ app.use(morgan("dev"));
 // route middlewares
 app.use("/api", authRoutes);
 
-const port = process.env.PORT || 8000;
-
-http.listen(port, () => console.log("Server running on http://localhost:8000"));
+app.listen(8000, () => console.log("Server running on port 8000"));

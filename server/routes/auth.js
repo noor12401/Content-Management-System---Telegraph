@@ -1,4 +1,5 @@
-const express = require("express");
+
+import express from "express";
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ const {
 
 router.get("/", (req, res) => {
   return res.json({
-    data: "Welcome to Backend!",
+    data: "hello world from kaloraat auth API",
   });
 });
 router.post("/signup", signup);
@@ -20,4 +21,4 @@ router.post("/signin", signin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 
-module.exports = router;
+export default router;
