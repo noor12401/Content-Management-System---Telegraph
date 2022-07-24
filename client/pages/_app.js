@@ -1,6 +1,5 @@
 import { ThemeProvider } from "../context/theme";
-// import "antd/dist/antd.css";
-// import "antd/dist/antd.dark.css";
+import { AuthProvider } from "../context/auth";
 import TopNav from "../components/TopNav";
 import "../public/css/style.css";
 import { Toaster } from "react-hot-toast";
@@ -8,9 +7,11 @@ import { Toaster } from "react-hot-toast";
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>
-      <TopNav />
-      <Toaster />
-      <Component {...pageProps} />
+      <AuthProvider>
+        <TopNav />
+        <Toaster />
+        <Component {...pageProps} />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
