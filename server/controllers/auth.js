@@ -29,7 +29,7 @@ exports.signup = async (req, res) => {
     const exist = await User.findOne({ email });
     if (exist) {
       return res.json({
-        error: "Email is already registered.",
+        error: "Email is taken",
       });
     }
     // hash password
@@ -64,7 +64,6 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  // console.log(req.body);
   try {
     const { email, password } = req.body;
     // check if our db has user with that email
@@ -86,7 +85,6 @@ exports.signin = async (req, res) => {
       expiresIn: "7d",
     });
 
-    //To prevent data leakage from URl.
     user.password = undefined;
     user.secret = undefined;
     res.json({
@@ -117,7 +115,7 @@ exports.forgotPassword = async (req, res) => {
     from: process.env.EMAIL_FROM,
     to: user.email,
     subject: "Password reset code",
-    html: "<h1>Your password  reset code is: {resetCode}</h1>",
+    html: `<h1>Your password  reset code is: ${resetCode}</h1>`,
   };
   // send email
   try {
