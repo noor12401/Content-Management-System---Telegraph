@@ -49,7 +49,7 @@ const TopNav = () => {
     >
       <Menu.Item key="mail" icon={<MailOutlined />}>
         <Link href="/">
-          <a>CMS</a>
+          <a>Telegraph</a>
         </Link>
       </Menu.Item>
 
