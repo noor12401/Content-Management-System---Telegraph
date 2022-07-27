@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -10,11 +10,17 @@ import { useRouter } from "next/router";
 function Signup() {
   // context
   const [auth, setAuth] = useContext(AuthContext);
-  // hook to route user to dasboard as per their role.
+    // hook to route user to dasboard as per their role.
   const router = useRouter();
   console.log(router);
   // state
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (auth?.token) {
+      router.push("/");
+    }
+  }, [auth]);
 
   const onFinish = async (values) => {
     // console.log("values => ", values);

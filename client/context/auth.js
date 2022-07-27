@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react";
+import axois from "axios";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -11,9 +12,11 @@ const AuthProvider = ({ children }) => {
 
   // config axios
   if (process.server) {
-    axios.defaults.baseURL = process.env.API; //base url for server side
+    axios.defaults.baseURL = process.env.API;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
   } else {
-    axios.defaults.baseURL = process.env.NEXT_PUBLIC_API; //base url for production side
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${auth?.token}`;
   }
 
   useEffect(() => {

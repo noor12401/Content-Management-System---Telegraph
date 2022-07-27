@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -16,6 +16,12 @@ function Signin() {
   const router = useRouter();
   // const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (auth?.token) {
+      router.push("/");
+    }
+  }, [auth]);
+
   const onFinish = async (values) => {
     // console.log("values => ", values);
     try {
@@ -32,7 +38,13 @@ function Signin() {
         localStorage.setItem("auth", JSON.stringify(data));
         toast.success("Successfully signed in");
         // redirect user
-        router.push("/");
+        if (data?.user?.role === "Admin") {
+          router.push("/admin");
+        } else if (data?.user?.role === "Author") {
+          router.push("/author");
+        } else {
+          router.push("/subscriber");
+        }
         // form.resetFields();
       }
     } catch (err) {
@@ -53,7 +65,7 @@ function Signin() {
           className="login-form"
           initialValues={{
             remember: true,
-            email: "noor3@gmail.com",
+            email: "admin@gmail.com",
             password: "Password",
           }}
           onFinish={onFinish}
