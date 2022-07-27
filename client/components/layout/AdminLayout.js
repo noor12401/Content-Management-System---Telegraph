@@ -22,7 +22,7 @@ function AdminLayout({ children }) {
     // } else {
     //   setLoading(false);
     // }
-    getCurrentAdmin();
+    if (auth?.token) getCurrentAdmin();
   }, [auth?.token]);
 
   const getCurrentAdmin = async () => {
