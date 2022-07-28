@@ -1,9 +1,12 @@
 import { useContext, useState, useEffect } from "react";
-import { Layout, Row, Col, Input, Select } from "antd";
+import { Layout, Row, Col, Input, Select, Modal, Button } from "antd";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import Editor from "rich-markdown-editor";
 import { ThemeContext } from "../../../context/theme";
 import axios from "axios";
+import { uploadImage } from "../../../functions/upload";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const { Option } = Select;
 const { Content, Sider } = Layout;
@@ -31,6 +34,9 @@ function NewPost() {
   const [content, setContent] = useState(savedContent());
   const [categories, setCategories] = useState([]);
   const [loadedCategories, setLoadedCategories] = useState([]);
+  const [visible, setVisible] = useState(false);
+  // hook
+  const router = useRouter();
 
   useEffect(() => {
     loadCategories();
@@ -42,6 +48,28 @@ function NewPost() {
       setLoadedCategories(data);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handlePublish = async () => {
+    try {
+      const { data } = await axios.post("/create-post", {
+        title,
+        content,
+        categories,
+      });
+      if (data?.error) {
+        toast.error(data?.error);
+      } else {
+        console.log("POST PUBLISHED RES => ", data);
+        toast.success("Post created successfully");
+        // localStorage.removeItem("post-title");
+        // localStorage.removeItem("post-content");
+        // router.push("/admin/posts");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Post create failed. Try again.");
     }
   };
 
@@ -64,22 +92,32 @@ function NewPost() {
           />
           <br />
           <br />
-          <Editor
-            dark={theme === "light" ? false : true}
-            defaultValue={content}
-            onChange={(v) => {
-              setContent(v());
-              localStorage.setItem("post-content", JSON.stringify(v()));
-            }}
-          />
+          <div className="editor-scroll">
+            <Editor
+              dark={theme === "light" ? false : true}
+              defaultValue={content}
+              onChange={(v) => {
+                setContent(v());
+                localStorage.setItem("post-content", JSON.stringify(v()));
+              }}
+              uploadImage={uploadImage}
+            />
+          </div>
 
           <br />
           <br />
 
-          <pre>{JSON.stringify(loadedCategories, null, 4)}</pre>
+          {/* <pre>{JSON.stringify(loadedCategories, null, 4)}</pre> */}
         </Col>
 
         <Col span={6} offset={1}>
+          <Button
+            style={{ margin: "10px 0px 10px 0px", width: "100%" }}
+            onClick={() => setVisible(true)}
+          >
+            Preview
+          </Button>
+
           <h4>Categories</h4>
 
           <Select
@@ -93,7 +131,32 @@ function NewPost() {
               <Option key={item.name}>{item.name}</Option>
             ))}
           </Select>
+
+          <Button
+            style={{ margin: "10px 0px 10px 0px", width: "100%" }}
+            type="primary"
+            onClick={handlePublish}
+          >
+            Publish
+          </Button>
         </Col>
+
+        <Modal
+          title="Preview"
+          centered
+          visible={visible}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          width={720}
+          footer={null}
+        >
+          <h1>{title}</h1>
+          <Editor
+            dark={theme === "light" ? false : true}
+            defaultValue={content}
+            readOnly={true}
+          />
+        </Modal>
       </Row>
     </AdminLayout>
   );
