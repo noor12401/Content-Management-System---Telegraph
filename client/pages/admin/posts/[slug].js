@@ -14,40 +14,49 @@ import { MediaContext } from "../../../context/media";
 const { Option } = Select;
 const { Content, Sider } = Layout;
 
-function NewPost() {
-  // load from local storage
-  const savedTitle = () => {
-    if (process.browser) {
-      if (localStorage.getItem("post-title")) {
-        return JSON.parse(localStorage.getItem("post-title"));
-      }
-    }
-  };
-  const savedContent = () => {
-    if (process.browser) {
-      if (localStorage.getItem("post-content")) {
-        return JSON.parse(localStorage.getItem("post-content"));
-      }
-    }
-  };
+function EditPost() {
   // context
   const [theme, setTheme] = useContext(ThemeContext);
   const [media, setMedia] = useContext(MediaContext);
   // state
-  const [title, setTitle] = useState(savedTitle());
-  const [content, setContent] = useState(savedContent());
-  const [categories, setCategories] = useState([]);
+  const [postId, setPostId] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [categories, setCategories] = useState([]); // post's existing categories
   const [loadedCategories, setLoadedCategories] = useState([]);
+  const [featuredImage, setFeaturedImage] = useState({});
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   // media Modal
   // const [visibleMedia, setVisibleMedia] = useState(false);
   // hook
   const router = useRouter();
 
   useEffect(() => {
+    loadPost();
+  }, [router?.query?.slug]);
+
+  useEffect(() => {
     loadCategories();
   }, []);
+
+  const loadPost = async () => {
+    try {
+      const { data } = await axios.get(`/post/${router.query.slug}`);
+      console.log("GOT POST FOR EDIT", data);
+      setTitle(data.title);
+      setContent(data.content);
+      setFeaturedImage(data.featuredImage);
+      setPostId(data._id);
+      // push category names
+      let arr = [];
+      data.categories.map((c) => arr.push(c.name));
+      setCategories(arr);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const loadCategories = async () => {
     try {
@@ -61,11 +70,15 @@ function NewPost() {
   const handlePublish = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post("/create-post", {
+      const { data } = await axios.put(`/edit-post/${postId}`, {
         title,
         content,
         categories,
-        featuredImage: media?.selected?._id,
+        featuredImage: media?.selected?._id
+          ? media?.selected?._id
+          : featuredImage?._id
+          ? featuredImage._id
+          : undefined,
       });
       if (data?.error) {
         toast.error(data?.error);
@@ -73,8 +86,6 @@ function NewPost() {
       } else {
         // console.log("POST PUBLISHED RES => ", data);
         toast.success("Post created successfully");
-        localStorage.removeItem("post-title");
-        localStorage.removeItem("post-content");
         setMedia({ ...media, selected: null });
         router.push("/admin/posts");
       }
@@ -89,7 +100,7 @@ function NewPost() {
     <AdminLayout>
       <Row>
         <Col span={14} offset={1}>
-          <h1>Create new post</h1>
+          <h1>Edit post</h1>
           <Input
             size="large"
             value={title}
@@ -104,17 +115,21 @@ function NewPost() {
           />
           <br />
           <br />
-          <div className="editor-scroll">
-            <Editor
-              dark={theme === "light" ? false : true}
-              defaultValue={content}
-              onChange={(v) => {
-                setContent(v());
-                localStorage.setItem("post-content", JSON.stringify(v()));
-              }}
-              uploadImage={uploadImage}
-            />
-          </div>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <div className="editor-scroll">
+              <Editor
+                dark={theme === "light" ? false : true}
+                defaultValue={content}
+                onChange={(v) => {
+                  setContent(v());
+                  localStorage.setItem("post-content", JSON.stringify(v()));
+                }}
+                uploadImage={uploadImage}
+              />
+            </div>
+          )}
 
           <br />
           <br />
@@ -145,16 +160,23 @@ function NewPost() {
             placeholder="Select categories"
             style={{ width: "100%" }}
             onChange={(v) => setCategories(v)}
+            value={[...categories]}
           >
             {loadedCategories.map((item) => (
               <Option key={item.name}>{item.name}</Option>
             ))}
           </Select>
 
-          {media?.selected && (
+          {media?.selected ? (
             <div style={{ marginTop: "15px" }}>
               <Image width="100%" src={media?.selected?.url} />
             </div>
+          ) : featuredImage?.url ? (
+            <div style={{ marginTop: "15px" }}>
+              <Image width="100%" src={featuredImage?.url} />
+            </div>
+          ) : (
+            ""
           )}
 
           <Button
@@ -199,4 +221,4 @@ function NewPost() {
   );
 }
 
-export default NewPost;
+export default EditPost;
