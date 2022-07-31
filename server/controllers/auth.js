@@ -162,3 +162,73 @@ export const currentUser = async (req, res) => {
     console.log(err);
   }
 };
+
+export const createUser = async (req, res) => {
+  try {
+    const { name, email, password, role, checked, website } = req.body;
+    if (!name) {
+      return res.json({
+        error: "Name is required",
+      });
+    }
+    if (!email) {
+      return res.json({
+        error: "Email is required",
+      });
+    }
+    if (!password || password.length < 6) {
+      return res.json({
+        error: "Password is required and should be 6 characters long",
+      });
+    }
+    // if user exist
+    const exist = await User.findOne({ email });
+    if (exist) {
+      return res.json({ error: "Email is taken" });
+    }
+    // hash password
+    const hashedPassword = await hashPassword(password);
+
+    // if checked, send email with login details
+    if (checked) {
+      // prepare email
+      const emailData = {
+        to: email,
+        from: process.env.EMAIL_FROM,
+        subject: "Welcome to Telegraph!",
+        html: `
+        <h1>Hello ${name}!</h1>
+        <p>You have created account on Telegraph successfully.</p>
+        <h3>Below are your login details</h3>
+        <p style="color:red;">Email: ${email}</p>
+        <p style="color:red;">Password: ${password}</p>
+        <small>Please change your password after login and destroy this email for security purposes.</small>
+        `,
+      };
+
+      try {
+        const data = await sgMail.send(emailData);
+        console.log("email sent => ", data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    try {
+      const user = await new User({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+        website,
+      }).save();
+
+      const { password, ...rest } = user._doc;
+      return res.json(rest);
+    } catch (err) {
+      console.log(err);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

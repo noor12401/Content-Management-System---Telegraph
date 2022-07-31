@@ -33,7 +33,7 @@ export const SinglePost = ({ post }) => {
             <Title>{post.title}</Title>
             <p>
               {dayjs(post.createdAt).format("MMMM D, YYYY h:mm A")} / 0 Comments
-              / in{" Unknown"}
+              / in{" "}
               {post?.categories.map((c) => (
                 <span key={c._id}>
                   <Link href={`/category/${c.slug}`}>
