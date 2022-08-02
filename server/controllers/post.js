@@ -216,3 +216,12 @@ export const postCount = async (req, res) => {
     console.log(err);
   }
 };
+
+export const postsForAdmin = async (req, res) => {
+  try {
+    const posts = await Post.find().select("title slug");
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
+};

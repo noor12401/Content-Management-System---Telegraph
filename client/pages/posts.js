@@ -52,7 +52,7 @@ export const Posts = ({ posts }) => {
       </Head>
       <Row>
         {allPosts.map((post) => (
-          <Col xs={23} xl={8}  style={{ marginTop: 10, marginBottom: 5}}>
+          <Col xs={23} xl={8}  style={{ marginTop: 10, marginBottom: 5 ,paddingLeft: 10, paddingRight: 10}}>
             <Link href={`/post/${post.slug}`}>
               <a>
                 <Card
