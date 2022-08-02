@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
 import { useWindowWidth } from "@react-hook/window-size";
+import { AuthContext } from "../../context/auth";
 import {
   PieChartOutlined,
   MailOutlined,
@@ -18,6 +19,8 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const AuthorNav = () => {
+  // context
+  const [auth, setAuth] = useContext(AuthContext);
   // state
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState("");
@@ -86,15 +89,15 @@ const AuthorNav = () => {
 
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
-          <Link href="/admin/comments">
-            <a className={activeName("/admin/comments")}>Comments</a>
+          <Link href="/author/comments">
+            <a className={activeName("/author/comments")}>Comments</a>
           </Link>
         </Menu.Item>
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href="/author/userid">
-            <a className={activeName("/author/userid")}>Profile</a>
+          <Link href={`/author/${auth?.user?._id}`}>
+            <a className={activeName(`/author/${auth?.user?._id}`)}>Profile</a>
           </Link>
         </Menu.Item>
       </Menu>

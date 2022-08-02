@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const nanoid = require("nanoid");
+import emaliValidator from "email-validator";
 // sendgrid
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_KEY);
@@ -228,6 +229,124 @@ export const createUser = async (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const users = async (req, res) => {
+  try {
+    const all = await User.find().select("-password -secret -resetCode");
+    res.json(all);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    if (userId === req.user._id) return;
+    const user = await User.findByIdAndDelete(userId);
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const currentUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).populate("image");
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateUserByAdmin = async (req, res) => {
+  try {
+    const { id, name, email, password, website, role, image } = req.body;
+
+    const userFromDb = await User.findById(id);
+
+    // check valid email
+    if (!emaliValidator.validate(email)) {
+      return res.json({ error: "Invalid email" });
+    }
+    // check if email is taken
+    const exist = await User.findOne({ email });
+    if (exist && exist._id.toString() !== userFromDb._id.toString()) {
+      return res.json({ error: "Email is taken" });
+    }
+    // check password length
+    if (password && password.length < 6) {
+      return res.json({
+        error: "Password is required and should be 6 characters long",
+      });
+    }
+
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+        name: name || userFromDb.name,
+        email: email || userFromDb.email,
+        password: hashedPassword || userFromDb.password,
+        website: website || userFromDb.website,
+        role: role || userFromDb.role,
+        image: image || userFromDb.image,
+      },
+      { new: true }
+    ).populate("image");
+
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateUserByUser = async (req, res) => {
+  try {
+    const { id, name, email, password, website, role, image } = req.body;
+
+    const userFromDb = await User.findById(id);
+
+    // check if user is himself/herself
+    if (userFromDb._id.toString() !== req.user._id.toString()) {
+      return res.status(403).send("You are not allowed to update this user");
+    }
+
+    // check valid email
+    if (!emaliValidator.validate(email)) {
+      return res.json({ error: "Invalid email" });
+    }
+    // check if email is taken
+    const exist = await User.findOne({ email });
+    if (exist && exist._id.toString() !== userFromDb._id.toString()) {
+      return res.json({ error: "Email is taken" });
+    }
+    // check password length
+    if (password && password.length < 6) {
+      return res.json({
+        error: "Password is required and should be 6 characters long",
+      });
+    }
+
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+        name: name || userFromDb.name,
+        email: email || userFromDb.email,
+        password: hashedPassword || userFromDb.password,
+        website: website || userFromDb.website,
+        // role: role || userFromDb.role,
+        image: image || userFromDb.image,
+      },
+      { new: true }
+    ).populate("image");
+
+    res.json(updated);
   } catch (err) {
     console.log(err);
   }

@@ -5,7 +5,7 @@ import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-const Media = () => {
+const Media = ({ page }) => {
   return (
     <Tabs>
       <TabPane tab="Upload File" key="1">

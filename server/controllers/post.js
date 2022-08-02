@@ -1,4 +1,5 @@
 import Post from "../models/post";
+import User from "../models/user";
 import Category from "../models/category";
 import Media from "../models/media";
 import slugify from "slugify";
@@ -52,6 +53,11 @@ export const createPost = async (req, res) => {
           postedBy: req.user._id,
         }).save();
 
+        // push the post _id to user's posts []
+        await User.findByIdAndUpdate(req.user._id, {
+          $addToSet: { posts: post._id },
+        });
+
         return res.json(post);
       } catch (err) {
         console.log(err);
@@ -62,13 +68,31 @@ export const createPost = async (req, res) => {
   }
 };
 
+// export const posts = async (req, res) => {
+//   try {
+//     const all = await Post.find()
+//       .populate("featuredImage")
+//       .populate("postedBy", "name")
+//       .populate("categories", "name slug")
+//       .sort({ createdAt: -1 });
+//     res.json(all);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
 export const posts = async (req, res) => {
   try {
+    const perPage = 6;
+    const page = req.params.page || 1;
+
     const all = await Post.find()
+      .skip((page - 1) * perPage)
       .populate("featuredImage")
       .populate("postedBy", "name")
       .populate("categories", "name slug")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .limit(perPage);
     res.json(all);
   } catch (err) {
     console.log(err);
@@ -179,6 +203,15 @@ export const postsByAuthor = async (req, res) => {
       .populate("featuredImage", "url")
       .sort({ createdAt: -1 });
     res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const postCount = async (req, res) => {
+  try {
+    const count = await Post.countDocuments();
+    res.json(count);
   } catch (err) {
     console.log(err);
   }
