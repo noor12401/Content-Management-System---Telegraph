@@ -1,18 +1,39 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-import { Row, Col, Card, Typography } from "antd";
+import { Row, Col, Card, Typography, List, Avatar } from "antd";
 import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 import Editor from "rich-markdown-editor";
 import { ThemeContext } from "../../context/theme";
+import CommentForm from "../../components/comments/CommentForm";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const { Title } = Typography;
 
 const { Meta } = Card;
 
-export const SinglePost = ({ post }) => {
+export const SinglePost = ({ post, postComments }) => {
   const [theme, setTheme] = useContext(ThemeContext);
+  // comments
+  const [comments, setComments] = useState(postComments);
+  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`/comment/${post._id}`, { comment });
+      setComments([data, ...comments]);
+      setComment("");
+      toast.success("Comment posted successfully");
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -48,6 +69,31 @@ export const SinglePost = ({ post }) => {
               dark={theme === "light" ? false : true}
               readOnly={true}
             />
+
+            <CommentForm
+              comment={comment}
+              setComment={setComment}
+              handleSubmit={handleSubmit}
+              loading={loading}
+            />
+
+            <div style={{ marginBottom: 50 }}></div>
+
+            <List
+              itemLayout="horizontal"
+              dataSource={comments}
+              renderItem={(item) => (
+                <List.Item key={item._id} id={item._id}>
+                  <List.Item.Meta
+                    avatar={<Avatar>{item?.postedBy?.name?.charAt(0)}</Avatar>}
+                    title={item?.postedBy?.name}
+                    description={`${item.content} - ${dayjs(
+                      item.createdAt
+                    ).fromNow()}`}
+                  />
+                </List.Item>
+              )}
+            />
           </Card>
         </Col>
 
@@ -73,7 +119,8 @@ export async function getServerSideProps({ params }) {
   const { data } = await axios.get(`${process.env.API}/post/${params.slug}`);
   return {
     props: {
-      post: data,
+      post: data.post,
+      postComments: data.comments,
     },
   };
 }
