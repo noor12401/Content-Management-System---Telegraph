@@ -1799,6 +1799,13 @@
     "rc-resize-observer" "^1.0.0"
     "rc-util" "^5.15.0"
 
+"react-count-to@^0.12.0":
+  "integrity" "sha512-zckT3EvkGvdM65X7mIMVDXtv0/pYI2wpNH6iSEE7M14F2jO2IbCBTuJ+GCifkriY/l493CF9qCH5J4hiel9hYQ=="
+  "resolved" "https://registry.npmjs.org/react-count-to/-/react-count-to-0.12.0.tgz"
+  "version" "0.12.0"
+  dependencies:
+    "prop-types" "^15.5.8"
+
 "react-dom@^18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
