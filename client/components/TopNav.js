@@ -70,6 +70,12 @@ const TopNav = () => {
         </Link>
       </Menu.Item>
 
+      <Menu.Item key="contact" icon={<MailOutlined />}>
+        <Link href="/contact">
+          <a>Contact</a>
+        </Link>
+      </Menu.Item>
+
       {auth?.user === null && (
         <>
           <Menu.Item

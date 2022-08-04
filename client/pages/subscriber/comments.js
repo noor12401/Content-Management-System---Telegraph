@@ -1,7 +1,7 @@
 import SubscriberLayout from "../../components/layout/SubscriberLayout";
 import UserComments from "../../components/comments/UserComments";
 
-const Comments =()=> {
+function Comments() {
   return (
     <SubscriberLayout>
       <UserComments />
