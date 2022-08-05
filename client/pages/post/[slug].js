@@ -1,6 +1,15 @@
 import { useContext, useState } from "react";
 import axios from "axios";
-import { Row, Col, Card, Typography, List, Avatar } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Typography,
+  List,
+  Avatar,
+  Divider,
+  Button,
+} from "antd";
 import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
@@ -8,6 +17,8 @@ import Editor from "rich-markdown-editor";
 import { ThemeContext } from "../../context/theme";
 import CommentForm from "../../components/comments/CommentForm";
 import { ShareSocial } from "react-share-social";
+import useCategory from "../../hooks/useCategory";
+import useLatestPosts from "../../hooks/useLatestPosts";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -22,6 +33,9 @@ export const SinglePost = ({ post, postComments }) => {
   const [comments, setComments] = useState(postComments);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+  // hooks
+  const { categories } = useCategory();
+  const { latestPosts } = useLatestPosts();
 
   const handleSubmit = async () => {
     try {
@@ -48,7 +62,7 @@ export const SinglePost = ({ post, postComments }) => {
           <Card
             cover={
               <img
-                src={post?.featuredImage?.url || "/images/default.jpg"}
+                src={post?.featuredImage?.url || "/images/default.jpeg"}
                 alt={post.title}
               />
             }
@@ -113,17 +127,24 @@ export const SinglePost = ({ post, postComments }) => {
         </Col>
 
         <Col xs={22} xl={6} offset={1}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet
-          officia suscipit assumenda ducimus dolorum optio, natus id blanditiis
-          aliquid, quibusdam quasi alias. Nobis excepturi cupiditate minima sed
-          in fugit eaque, quod vitae suscipit sit maxime. Vitae consequuntur
-          alias rerum, consectetur modi incidunt unde ipsam optio amet
-          praesentium quo exercitationem asperiores eveniet cupiditate illo.
-          Nemo quo, esse impedit id ipsum magnam earum dolores inventore, quidem
-          doloremque nesciunt ad fugit quis deleniti provident corrupti
-          doloribus eum quisquam, quae non? Eveniet, accusantium doloremque, in
-          repudiandae tempore voluptas velit est obcaecati qui itaque illum
-          eligendi amet ipsum, culpa modi ut. Laudantium libero blanditiis qui?
+          <Divider>Categories</Divider>
+
+          {categories.map((c) => (
+            <Link href={`/category/${c.slug}`} key={c._id}>
+              <a>
+                <Button style={{ margin: 2 }}>{c.name}</Button>
+              </a>
+            </Link>
+          ))}
+
+          <Divider>Latest Posts</Divider>
+          {latestPosts.map((p) => (
+            <Link href={`/post/${p.slug}`} key={p._id}>
+              <a>
+                <h4>{p.title}</h4>
+              </a>
+            </Link>
+          ))}
         </Col>
       </Row>
     </>
