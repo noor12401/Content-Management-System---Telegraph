@@ -1,17 +1,23 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
+import Head from "next/head";
+import FullWidthImage from "../components/pages/FullWidthImage";
 
 function Home() {
-  // Using the Global Context for Authentication
+  // context
   const [auth, setAuth] = useContext(AuthContext);
 
   return (
-    <div>
-      <h1>Home</h1>
-
-      <br />
-      <pre>{JSON.stringify(auth, null, 4)}</pre>
-    </div>
+    <>
+      <Head>
+        <title>Modern Content Management System - CMS</title>
+        <meta
+          name="description"
+          content="Read latest blog posts on web development"
+        />
+      </Head>
+      <FullWidthImage />
+    </>
   );
 }
 
