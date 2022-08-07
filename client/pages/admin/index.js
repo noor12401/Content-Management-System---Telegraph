@@ -1,25 +1,10 @@
-import { useEffect, useState } from "react";
 import { Row, Col, Divider } from "antd";
 import AdminLayout from "../../components/layout/AdminLayout";
-import axios from "axios";
 import RenderProgress from "../../components/posts/RenderProgress";
+import useNumbers from "../../hooks/useNumbers";
 
 function Admin() {
-  // state
-  const [numbers, setNumbers] = useState({});
-
-  useEffect(() => {
-    getNumbers();
-  }, []);
-
-  const getNumbers = async () => {
-    try {
-      const { data } = await axios.get("/numbers");
-      setNumbers(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { numbers } = useNumbers();
 
   return (
     <AdminLayout>
