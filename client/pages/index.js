@@ -1,5 +1,4 @@
 import Head from "next/head";
-import FullWidthImage from "../components/pages/FullWidthImage";
 import WebsiteLifeCycle from "../components/pages/WebsiteLifeCycle";
 import HomePageStatistics from "../components/pages/HomePageStatistics";
 import LandingImage from "../components/pages/LandingImage";

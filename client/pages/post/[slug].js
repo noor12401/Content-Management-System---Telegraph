@@ -70,7 +70,7 @@ export const SinglePost = ({ post, postComments }) => {
           >
             <Title>{post.title}</Title>
             <p>
-              {dayjs(post.createdAt).format("MMMM D, YYYY h:mm A")} / 0 Comments
+              {dayjs(post.createdAt).format("MMMM D, YYYY h:mm A")} / {comments?.length} Comments 
               / in{" "}
               {post?.categories.map((c) => (
                 <span key={c._id}>

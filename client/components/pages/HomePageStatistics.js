@@ -1,12 +1,8 @@
-import { AuthContext } from "../../context/auth";
 import RenderProgress from "../../components/posts/RenderProgress";
 import useNumbers from "../../hooks/useNumbers";
-import { useContext } from "react";
 import { Row, Col } from "antd";
 
 const HomePageStatistics = () => {
-  // context
-  const [auth, setAuth] = useContext(AuthContext);
   // hooks
   const { numbers } = useNumbers();
 
@@ -26,7 +22,7 @@ const HomePageStatistics = () => {
           <RenderProgress
             number={numbers.posts}
             name="Posts"
-            link="/admin/posts"
+            link="/"
           />
         </Col>
         {/* comments */}
@@ -37,7 +33,7 @@ const HomePageStatistics = () => {
           <RenderProgress
             number={numbers.comments}
             name="Comments"
-            link="/admin/comments"
+            link="/"
           />
         </Col>
         {/* catgories */}
@@ -48,7 +44,7 @@ const HomePageStatistics = () => {
           <RenderProgress
             number={numbers.categories}
             name="Categories"
-            link="/admin/categories"
+            link="/"
           />
         </Col>
         {/* users */}
@@ -59,7 +55,7 @@ const HomePageStatistics = () => {
           <RenderProgress
             number={numbers.users}
             name="Users"
-            link="/admin/users"
+            link="/"
           />
         </Col>
       </Row>
