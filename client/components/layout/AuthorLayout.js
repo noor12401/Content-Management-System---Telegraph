@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
+import LoadingToRedirect from "../LoadingToRedirect";
 
 const { Content } = Layout;
 
@@ -36,18 +37,7 @@ function AuthorLayout({ children }) {
   };
 
   if (loading) {
-    return (
-      <LoadingOutlined
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontSize: "50px",
-          color: "red",
-        }}
-      />
-    );
+    return <LoadingToRedirect />;
   }
 
   return (
