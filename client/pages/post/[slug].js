@@ -62,6 +62,7 @@ export const SinglePost = ({ post, postComments }) => {
           <Card
             cover={
               <img
+              style={{ height: "460px", objectFit: "cover",}}
                 src={post?.featuredImage?.url || "/images/default.jpeg"}
                 alt={post.title}
               />

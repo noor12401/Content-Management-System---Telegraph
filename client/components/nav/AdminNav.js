@@ -120,12 +120,7 @@ const AdminNav = () => {
           </Link>
         </Menu.Item>
 
-        {/* Customize */}
-        <Menu.Item key="14" icon={<BgColorsOutlined />}>
-          <Link href="/admin/customize">
-            <a className={activeName("/admin/customize")}>Customize</a>
-          </Link>
-        </Menu.Item>
+        
       </Menu>
     </Sider>
   );
