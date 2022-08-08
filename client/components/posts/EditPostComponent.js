@@ -42,10 +42,11 @@ function EditPost({ page = "admin" }) {
     try {
       const { data } = await axios.get(`/post/${router.query.slug}`);
       console.log("GOT POST FOR EDIT", data);
+      console.log(data.post._id)
       setTitle(data.post.title);
       setContent(data.post.content);
       setFeaturedImage(data.post.featuredImage);
-      setPostId(data._id);
+      setPostId(data.post._id);
       // push category names
       let arr = [];
       data.post.categories.map((c) => arr.push(c.name));
@@ -179,7 +180,7 @@ function EditPost({ page = "admin" }) {
           type="primary"
           onClick={handlePublish}
         >
-          Publish
+          Update
         </Button>
       </Col>
       {/* preview modal */}

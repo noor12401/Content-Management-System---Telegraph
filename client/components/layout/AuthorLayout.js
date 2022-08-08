@@ -3,7 +3,6 @@ import { Layout } from "antd";
 import AuthorNav from "../nav/AuthorNav";
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
-import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import LoadingToRedirect from "../LoadingToRedirect";
 

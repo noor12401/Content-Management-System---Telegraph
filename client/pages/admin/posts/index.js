@@ -27,7 +27,7 @@ function Posts() {
   const fetchPosts = async () => {
     try {
       const { data } = await axios.get("/posts-for-admin");
-      setPost((prev) => ({ ...prev, posts: data }));
+      setPost((prev) => ({ ...prev, posts: data.reverse() }));
     } catch (err) {
       console.log(err);
     }
