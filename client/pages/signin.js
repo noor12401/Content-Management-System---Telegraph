@@ -18,7 +18,7 @@ function Signin() {
 
   useEffect(() => {
     if (auth?.token) {
-      router.push("/");
+      //router.push("/");
     }
   }, [auth]);
 
