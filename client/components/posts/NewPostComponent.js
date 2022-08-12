@@ -89,6 +89,7 @@ function NewPostComponent({ page = "admin" }) {
       <Col span={14} offset={1}>
         <h1>Create new post</h1>
         <Input
+          id="new-post-title"
           size="large"
           value={title}
           placeholder="Give your post a title"
@@ -126,6 +127,7 @@ function NewPostComponent({ page = "admin" }) {
         </Button>
 
         <Button
+          id="featured-image"
           style={{ margin: "10px 0px 10px 0px", width: "100%" }}
           onClick={() => setMedia({ ...media, showMediaModal: true })}
         >
@@ -153,6 +155,7 @@ function NewPostComponent({ page = "admin" }) {
         )}
 
         <Button
+          id="new-post-publish"
           loading={loading}
           style={{ margin: "10px 0px 10px 0px", width: "100%" }}
           type="primary"

@@ -59,12 +59,12 @@ const AuthorNav = () => {
         <SubMenu key="2" icon={<PushpinOutlined />} title="Posts">
           <Menu.Item key="3">
             <Link href="/author/posts">
-              <a className={activeName("/author/posts")}>All Posts</a>
+              <a id="author-all-posts" className={activeName("/author/posts")}>All Posts</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
             <Link href="/author/posts/new">
-              <a className={activeName("/author/posts/new")}>Add New</a>
+              <a id="author-add-posts" className={activeName("/author/posts/new")}>Add New</a>
             </Link>
           </Menu.Item>
         </SubMenu>
@@ -86,14 +86,14 @@ const AuthorNav = () => {
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
           <Link href="/author/comments">
-            <a className={activeName("/author/comments")}>Comments</a>
+            <a id="author-all-comments" className={activeName("/author/comments")}>Comments</a>
           </Link>
         </Menu.Item>
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
           <Link href={`/author/${auth?.user?._id}`}>
-            <a className={activeName(`/author/${auth?.user?._id}`)}>Profile</a>
+            <a id="author-profile" className={activeName(`/author/${auth?.user?._id}`)}>Profile</a>
           </Link>
         </Menu.Item>
       </Menu>

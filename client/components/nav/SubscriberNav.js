@@ -63,7 +63,7 @@ const SubscriberNav = () => {
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
           <Link href={`/subscriber/${auth?.user?._id}`}>
-            <a className={activeName(`/subscriber/${auth?.user?._id}`)}>
+            <a id="subscriber-profile" className={activeName(`/subscriber/${auth?.user?._id}`)}>
               Profile
             </a>
           </Link>

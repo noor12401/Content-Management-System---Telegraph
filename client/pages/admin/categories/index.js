@@ -109,7 +109,7 @@ function Categories() {
                 placeholder="Enter category name"
               />
             </Form.Item>
-            <Button loading={loading} type="primary" htmlType="submit">
+            <Button id="create-category" loading={loading} type="primary" htmlType="submit">
               Submit
             </Button>
           </Form>

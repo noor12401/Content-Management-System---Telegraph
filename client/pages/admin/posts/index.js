@@ -66,7 +66,7 @@ function Posts() {
               </a>
             </Link>
           </Button>
-          <h1 style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
+          <h1 id="total-admin-post-count" style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
 
           <Input
             placeholder="Search"

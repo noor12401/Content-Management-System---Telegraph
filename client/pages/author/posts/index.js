@@ -61,7 +61,7 @@ function Posts() {
               </a>
             </Link>
           </Button>
-          <h1 style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
+          <h1 id="total-author-post-count" style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
           <PostsList
             posts={posts}
             handleEdit={handleEdit}

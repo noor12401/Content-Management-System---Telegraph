@@ -51,6 +51,7 @@ const NewUser = () => {
         <Col span={12} offset={6}>
           <h4 style={{ marginBottom: "-10px" }}>Add new user</h4>
           <Input
+            id="user-name"
             style={{ margin: "20px 0px 10px 0px" }}
             size="large"
             placeholder="Full name"
@@ -58,6 +59,7 @@ const NewUser = () => {
             onChange={(e) => setName(e.target.value)}
           />
           <Input
+            id="user-email"
             style={{ margin: "10px 0px 10px 0px" }}
             size="large"
             placeholder="Email"
@@ -95,7 +97,7 @@ const NewUser = () => {
             onChange={(e) => setRole(e)}
           >
             <Select.Option value="Subscriber">Subscriber</Select.Option>
-            <Select.Option value="Author">Author</Select.Option>
+            <Select.Option id="select-role" value="Author">Author</Select.Option>
             <Select.Option value="Admin">Admin</Select.Option>
           </Select>
 
@@ -107,6 +109,7 @@ const NewUser = () => {
           </Checkbox>
 
           <Button
+            id="user-create"
             onClick={handleSubmit}
             type="default"
             style={{ margin: "10px 0px 10px 0px" }}

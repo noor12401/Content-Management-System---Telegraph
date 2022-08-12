@@ -42,7 +42,7 @@ function EditPost({ page = "admin" }) {
     try {
       const { data } = await axios.get(`/post/${router.query.slug}`);
       console.log("GOT POST FOR EDIT", data);
-      console.log(data.post._id)
+      console.log(data.post._id);
       setTitle(data.post.title);
       setContent(data.post.content);
       setFeaturedImage(data.post.featuredImage);
@@ -100,6 +100,7 @@ function EditPost({ page = "admin" }) {
       <Col span={14} offset={1}>
         <h1>Edit post</h1>
         <Input
+          id="edit-post-title"
           size="large"
           value={title}
           placeholder="Give your post a title"
@@ -175,6 +176,7 @@ function EditPost({ page = "admin" }) {
         )}
 
         <Button
+          id="edit-post-publish"
           loading={loading}
           style={{ margin: "10px 0px 10px 0px", width: "100%" }}
           type="primary"

@@ -87,7 +87,9 @@ function UserComments() {
     <>
       <Row>
         <Col span={24}>
-          <h1 style={{ marginTop: 15 }}>{comments?.length} Comments</h1>
+          <h1 id="total-author-post-count" style={{ marginTop: 15 }}>
+            {comments?.length} Comments
+          </h1>
 
           <Input
             placeholder="Search"
@@ -106,6 +108,7 @@ function UserComments() {
                     <a>view</a>
                   </Link>,
                   <a
+                    id="edit-comment"
                     onClick={() => {
                       setSelectedComment(item);
                       setVisible(true);
@@ -114,7 +117,9 @@ function UserComments() {
                   >
                     edit
                   </a>,
-                  <a onClick={() => handleDelete(item)}>delete</a>,
+                  <a id="delete-comment" onClick={() => handleDelete(item)}>
+                    delete
+                  </a>,
                 ]}
               >
                 <List.Item.Meta

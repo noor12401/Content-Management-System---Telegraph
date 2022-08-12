@@ -84,12 +84,12 @@ const TopNav = () => {
             icon={<UserAddOutlined />}
           >
             <Link href="/signup">
-              <a>Signup</a>
+              <a id="signup">Signup</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="signin" icon={<UserOutlined />}>
             <Link href="/signin">
-              <a>Signin</a>
+              <a id="signin">Signin</a>
             </Link>
           </Menu.Item>
         </>
@@ -106,7 +106,7 @@ const TopNav = () => {
             <Menu.ItemGroup title="Management">
               <Menu.Item key="setting:2">
                 <Link href={roleBasedLink()}>
-                  <a>Dashboard</a>
+                  <a id="dashboard">Dashboard</a>
                 </Link>
               </Menu.Item>
             </Menu.ItemGroup>
@@ -117,7 +117,7 @@ const TopNav = () => {
             key="signout"
             icon={<LogoutOutlined />}
           >
-            <a>Sign out</a>
+            <a id="signout">Sign out</a>
           </Menu.Item>
         </>
       )}

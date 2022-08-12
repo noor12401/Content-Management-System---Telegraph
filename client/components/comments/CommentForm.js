@@ -12,6 +12,7 @@ const CommentForm = ({ comment, setComment, handleSubmit, loading }) => {
     <>
       <br />
       <TextArea
+        id="write-comment"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder="Write a comment..."
@@ -20,6 +21,7 @@ const CommentForm = ({ comment, setComment, handleSubmit, loading }) => {
         maxLength={200}
       />
       <Button
+        id="post-comment"
         onClick={handleSubmit}
         loading={loading}
         disabled={comment === ""}

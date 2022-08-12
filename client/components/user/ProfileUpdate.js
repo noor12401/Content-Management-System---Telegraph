@@ -118,6 +118,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
+          id="update-website"
           style={{ margin: "10px 0px 10px 0px" }}
           size="large"
           placeholder="Website"
@@ -126,6 +127,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
         />
 
         <Input.Password
+          id="update-profile-password"
           style={{ margin: "10px 0px 10px 0px" }}
           size="large"
           placeholder="Password"
@@ -146,6 +148,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
         )}
 
         <Button
+          id="update-profile"
           onClick={handleSubmit}
           type="default"
           style={{ margin: "10px 0px 10px 0px" }}
