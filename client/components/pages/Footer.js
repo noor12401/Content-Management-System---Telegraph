@@ -13,7 +13,7 @@ const Footer = () => (
             Nooruddin Shaikh
           </Link>{" "}
           and{" "}
-          <Link href="https://www.linkedin.com/in/nooruddin-shaikh">
+          <Link href="https://www.linkedin.com/in/shaarifg">
             Mohd Sharif
           </Link>
         </h4>

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Col, Row } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Tooltip, Col, Row } from "antd";
+import { CopyOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -59,14 +59,89 @@ function Signin() {
       <Col span={8} offset={8}>
         <h1 style={{ paddingTop: "100px" }}>Signin</h1>
 
+        <div
+          style={{
+            border: "2px dashed",
+            marginBottom: 24,
+            padding: "10px 10px 0px",
+            borderRadius: 10,
+          }}
+        >
+          <span
+            class="ant-typography ant-typography-disabled"
+            style={{ paddingBottom: 10 }}
+          >
+            Login as Author (email/password)
+          </span>
+
+          <p>
+            author@telegraph.com
+            <Tooltip title="Copy Email">
+              <Button
+                style={{ border: 0 }}
+                icon={<CopyOutlined />}
+                onClick={() =>
+                  navigator.clipboard.writeText("author@telegraph.com")
+                }
+              />
+            </Tooltip>
+          </p>
+
+          <p style={{ marginTop: -20 }}>
+            Author
+            <Tooltip title="Copy Password">
+              <Button
+                style={{ border: 0 }}
+                icon={<CopyOutlined />}
+                onClick={() => navigator.clipboard.writeText("Author")}
+              />
+            </Tooltip>
+          </p>
+
+          <hr
+            style={{ border: "1px dashed", marginTop: 10, marginBottom: 10 }}
+          ></hr>
+
+          <span
+            class="ant-typography ant-typography-disabled"
+            style={{ paddingBottom: 10 }}
+          >
+            Login as Subscriber (email/password)
+          </span>
+
+          <p>
+            subscriber@telegraph.com
+            <Tooltip title="Copy Email">
+              <Button
+                style={{ border: 0 }}
+                icon={<CopyOutlined />}
+                onClick={() =>
+                  navigator.clipboard.writeText("subscriber@telegraph.com")
+                }
+              />
+            </Tooltip>
+          </p>
+
+          <p style={{ marginTop: -20 }}>
+            Subscriber
+            <Tooltip title="Copy Password">
+              <Button
+                style={{ border: 0 }}
+                icon={<CopyOutlined />}
+                onClick={() => navigator.clipboard.writeText("Subscriber")}
+              />
+            </Tooltip>
+          </p>
+        </div>
+
         <Form
           // form={form}
           name="normal_login"
           className="login-form"
           initialValues={{
             remember: true,
-            email: "admin@gmail.com",
-            password: "Password",
+            email: "admin@telegraph.com",
+            password: "Admin",
           }}
           onFinish={onFinish}
         >
