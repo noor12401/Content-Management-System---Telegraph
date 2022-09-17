@@ -41,4 +41,4 @@ Before testing make sure you have latest firefox browser installed. If not, you 
 npm test
 ```
 **Testing Output**
-![Testing](https://gitlab-wipro.stackroute.in/nooruddin.5118032.et/capstone-cms/-/raw/master/client/tests/Testing.png)
+![Testing](https://raw.githubusercontent.com/noor12401/Content-Management-System---Telegraph/master/client/tests/Testing.png)
